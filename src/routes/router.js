@@ -3,15 +3,11 @@ import Router from 'vue-router'
 const routes = [
 	{
 		path: '/',
-		redirect: '/shadow'
+		redirect: '/order'
 	},
 	{
-		path: '/shadow',
-		component: () => import('../views/BoxShadow.vue')
-	},
-	{
-		path: '/2d',
-		component: () => import('../views/Css2D.vue')
+		path: '/order',
+		component: () => import('../views/Order.vue')
 	},
 	{
 		path: '/login',

@@ -43,6 +43,10 @@ module.exports = {
 						}
 					}
 				]
+			},
+			{
+		        test: /\.(eot|svg|ttf|woff|woff2)(\?\S*)?$/,
+		        use: ['file-loader']
 			}
 		]
 	},
