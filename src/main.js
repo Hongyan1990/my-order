@@ -2,7 +2,8 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import {
   Button, Container, Header, Main, Row, Col,
-  Table, TableColumn, Dialog, Input, Form, FormItem
+  Table, TableColumn, Dialog, Input, Form, FormItem,
+  Tooltip, Upload
 } from 'element-ui'
 
 import App from './app.vue'
@@ -24,12 +25,14 @@ Vue.use(Dialog)
 Vue.use(Input)
 Vue.use(Form)
 Vue.use(FormItem)
+Vue.use(Tooltip)
+Vue.use(Upload)
 
 router.beforeEach((to, from, next) => {
   const username = cookie.getCookie('username')
   if(username === null && to.path !== '/login') {
   	next('/login')
-  }else {
+  } else {
   	next()
   }
   

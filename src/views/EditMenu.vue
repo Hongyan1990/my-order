@@ -1,7 +1,7 @@
 <template>
 	<div>
-		<el-dialog  :close-on-click-modal="false" title="创建菜单" :visible.sync="dialogVisibale">
-	       <el-form  label-width="70px"  :inline="true" :model="rowData"  class="demo-form-inline">
+		<el-dialog  :close-on-click-modal="false" title="修改菜单" :visible.sync="dialogVisibale">
+	    <el-form  label-width="70px"  :inline="true" :model="rowData"  class="demo-form-inline">
 		    <el-form-item label="店铺名称">
 		      <el-input v-model="rowData.shopname" autocomplete="off"></el-input>
 		    </el-form-item>
@@ -28,8 +28,8 @@
 		    </el-form-item>
 		  </el-form>
 	      <div slot="footer" class="dialog-footer">
-	        <el-button @click="closeAddMenuDialog">取 消</el-button>
-	        <el-button type="primary" @click="addMenu" :disabled="validateErr">确 定</el-button>
+	        <el-button @click="closeMenuDialog">取 消</el-button>
+	        <el-button type="primary" @click="editMenu" :disabled="validateErr">确 定</el-button>
 	      </div>
 	    </el-dialog>
 	</div>
@@ -37,25 +37,18 @@
 
 <script>
 	export default {
-		name: 'addmenu',
+		name: 'editmenu',
 		props: {
-	      isShowDialog: {
+	      isShowEditDialog: {
 	        type: Boolean,
 	        default: false
-	      }
+	      },
+	      rowData: {
+	      	type: Object
+	      },
 	    },
 		data () {
 			return {
-				rowData: {
-					shopname: '',
-					address: '',
-					phone: '',
-					open_time: '',
-					delivery_time: '',
-					scores: '',
-					price: '',
-					family: ''
-				},
 				formLabelWidth: '100px',
 				validateErr: false,
 				validateMsg: ''
@@ -64,19 +57,19 @@
 		computed: {
 	      dialogVisibale: {
 	        get () {
-	          return this.isShowDialog
+	          return this.isShowEditDialog
 	        },
 	        set () {
-	          this.$emit('closeCreateMenuDialog')
+	          this.$emit('closeEditMenuDialog')
 	        }
 	      },
 
 	    },
 	    methods: {
-	    	closeAddMenuDialog () {
-	    		this.$emit('closeCreateMenuDialog')
+	    	closeMenuDialog () {
+	    		this.$emit('closeEditMenuDialog')
 	    	},
-	    	addMenu () {
+	    	editMenu () {
 
 	    	}
 	    }

@@ -34,7 +34,12 @@ export default {
     	e.preventDefault()
     	if(this.validteForm()) {
     		cookie.setCookie('username', this.username, 1)
-			this.$router.push('/order')
+        if(this.username === 'admin') {
+          this.$router.push('/order')
+        } else {
+          this.$router.push('/user')
+        }
+			  
     	}
     },
     validteForm () {
