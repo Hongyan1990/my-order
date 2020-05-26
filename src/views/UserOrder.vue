@@ -8,6 +8,7 @@
 		  			<el-button 
 		  				type="primary" 
 		  				icon="el-icon-plus"
+		  				:disabled="multipleSelection.length===0"
 		  				size="small">新增订单</el-button>
 		  		</el-col>
 		  	</el-row>

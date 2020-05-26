@@ -7,7 +7,7 @@ import {
 } from 'element-ui'
 
 import App from './app.vue'
-
+// /home/hongyan/Desktop/hongyan/my-order/dist
 import router from './routes/router.js'
 import cookie from './util/cookie.js'
 
