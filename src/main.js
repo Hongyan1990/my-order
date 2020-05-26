@@ -3,7 +3,7 @@ import Router from 'vue-router'
 import {
   Button, Container, Header, Main, Row, Col,
   Table, TableColumn, Dialog, Input, Form, FormItem,
-  Tooltip, Upload
+  Tooltip, Upload, Loading, Message
 } from 'element-ui'
 
 import App from './app.vue'
@@ -27,6 +27,8 @@ Vue.use(Form)
 Vue.use(FormItem)
 Vue.use(Tooltip)
 Vue.use(Upload)
+Vue.use(Loading)
+Vue.prototype.$message = Message
 
 router.beforeEach((to, from, next) => {
   const username = cookie.getCookie('username')

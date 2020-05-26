@@ -36,6 +36,7 @@
 </template>
 
 <script>
+	import {updateMenu} from '../model/client-model.js'
 	export default {
 		name: 'editmenu',
 		props: {
@@ -70,7 +71,17 @@
 	    		this.$emit('closeEditMenuDialog')
 	    	},
 	    	editMenu () {
-
+	    		updateMenu(this.rowData)
+	    			.then(res => {
+	    				this.$message({
+				          message: '修改菜单成功',
+				          type: 'success'
+				        });
+				        this.$emit('closeEditMenuDialog', 'modify')
+	    			})
+	    			.catch(res => {
+	    				this.$message.error('修改菜单失败');
+	    			})
 	    	}
 	    }
 	}

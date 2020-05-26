@@ -14,6 +14,7 @@
 		  	</el-row>
 		  	<el-table
 			    :data="tableData"
+			    v-loading="loading"
 			    style="width: 100%">
 			    <el-table-column
 			      label="店铺ID">
@@ -122,40 +123,24 @@
 	import AddMenu from './AddMenu.vue'
 	import EditMenu from './EditMenu.vue'
 	import cookie from '../util/cookie.js'
+	import {getAllMenus, deleteMenu} from '../model/client-model.js'
 	export default {
 		name: 'adminorder',
 		components: {
 			AddMenu, EditMenu
 		},
 		beforeRouteEnter (to, from, next) {
-	    const username = cookie.getCookie('username')
-	    if(username === 'admin' && from.path === '/user') {
-	    	next('/login')
-	    } else {
-	    	next()
-	    }
-	  },
+		    const username = cookie.getCookie('username')
+		    if(username === 'admin' && from.path === '/user') {
+		    	next('/login')
+		    } else {
+		    	next()
+		    }
+		},
 		data () {
 			return {
-				tableData: [
-					{
-	          	date: '2016-05-02',
-	          	name: '王小虎',
-	          	address: '上海市普陀区金沙江路 1518 弄'
-	        }, {
-	          	date: '2016-05-04',
-	          	name: '王小虎',
-	          	address: '上海市普陀区金沙江路 1517 弄'
-	        }, {
-	          	date: '2016-05-01',
-	          	name: '王小虎',
-	          	address: '上海市普陀区金沙江路 1519 弄'
-	        }, {
-	          	date: '2016-05-03',
-	          	name: '王小虎',
-	          	address: '上海市普陀区金沙江路 1516 弄'
-	        }
-        ],
+				tableData: [],
+				loading: true,
 		    dialogFormVisible: false,
 		    editDialogFormVisible:false,
 		    rowData: {}
@@ -165,13 +150,38 @@
 			handleEdit(i, data) {
 				this.editDialogFormVisible = true;
 			},
-			handleDelete(i, data) {},
-			closeCreateMenuDialog () {
+			handleDelete(i, data) {
+				deleteMenu(data.id)
+					.then(res => {
+						this.$message({
+		          message: '删除成功',
+		          type: 'success'
+		        });
+					})
+					.catch(err => {
+						this.$message.error('删除失败');
+					})
+			},
+			getMenus () {
+				getAllMenus()
+					.then(data => {
+						this.loading = false;
+					})
+					.catch(err => {
+						this.loading = false;
+					})
+			},
+			closeCreateMenuDialog (flag) {
+				if(flag === 'add') {}
 				this.dialogFormVisible = false
 			},
-			closeEditMenuDialog () {
+			closeEditMenuDialog (flag) {
+				if(flag === 'modify') {}
 				this.editDialogFormVisible = false
 			}
+		},
+		mounted () {
+			this.getMenus();
 		}
 	}
 </script>

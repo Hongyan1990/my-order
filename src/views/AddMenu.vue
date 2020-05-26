@@ -36,6 +36,7 @@
 </template>
 
 <script>
+	import {addMenu} from '../model/client-model.js'
 	export default {
 		name: 'addmenu',
 		props: {
@@ -77,7 +78,17 @@
 	    		this.$emit('closeCreateMenuDialog')
 	    	},
 	    	addMenu () {
-
+	    		addMenu(this.rowData)
+	    			.then(res => {
+	    				this.$message({
+				          message: '新增菜单成功',
+				          type: 'success'
+				        });
+				        this.$emit('closeCreateMenuDialog', 'add')
+	    			})
+	    			.catch(err => {
+	    				this.$message.error('新增菜单失败');
+	    			})
 	    	}
 	    }
 	}

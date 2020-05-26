@@ -8,12 +8,14 @@
 		  			<el-button 
 		  				type="primary" 
 		  				icon="el-icon-plus"
+		  				@click="addMyOrder"
 		  				:disabled="multipleSelection.length===0"
 		  				size="small">新增订单</el-button>
 		  		</el-col>
 		  	</el-row>
 		  	<el-table
 			    :data="tableData"
+			    v-loading="loading"
 			     @selection-change="handleSelectionChange"
 			    style="width: 100%">
 			    <el-table-column
@@ -80,10 +82,12 @@
 	</div>
 </template>
 <script>
+	import {getAllMenus, addOrder} from '../model/client-model.js'
 	export default {
 		name: 'userorder',
 		data () {
 			return {
+				loading: true,
 				tableData: [
 					{
 	          	date: '2016-05-02',
@@ -109,7 +113,32 @@
 		methods: {
 			handleSelectionChange (val) {
 				this.multipleSelection = val
+			},
+			addMyOrder () {
+				addOrder(this.multipleSelection)
+					.then(res => {
+						this.$message({
+				          message: '新增订单成功',
+				          type: 'success'
+				        });
+				        this.getMenus();
+					})
+					.catch(err => {
+						this.$message.error('新增订单失败');
+					})
+			},
+			getMenus () {
+				getAllMenus()
+					.then(data => {
+						this.loading = false;
+					})
+					.catch(err => {
+						this.loading = false;
+					})
 			}
+		},
+		mounted () {
+			this.getMenus();
 		}
 	}
 </script>

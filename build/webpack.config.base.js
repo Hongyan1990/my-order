@@ -1,5 +1,6 @@
 const path = require('path')
 const HTMLPlugin = require('html-webpack-plugin')
+const {CleanWebpackPlugin} = require('clean-webpack-plugin')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 
 module.exports = {
@@ -38,6 +39,7 @@ module.exports = {
 		]
 	},
 	plugins: [
+		new CleanWebpackPlugin(),
 		new HTMLPlugin({template: path.join(__dirname, 'template.html'), title: 'hello scss'}),
 		new VueLoaderPlugin()
 	]
