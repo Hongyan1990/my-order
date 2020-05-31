@@ -19,55 +19,55 @@
 			    <el-table-column
 			      label="店铺ID">
 			      <template slot-scope="scope">
-			        <span style="margin-left: 10px">{{ scope.row.id }}</span>
+			        <span style="margin-left: 10px">{{ scope.row.rowKey }}</span>
 			      </template>
 			    </el-table-column>
 			    <el-table-column
 			      label="店铺名称">
 			      <template slot-scope="scope">
-			        <span>{{scope.row.name}}</span>
+			        <span>{{scope.row.shopname}}</span>
 			      </template>
 			    </el-table-column>
 			    <el-table-column
 			      label="店铺地址">
 			      <template slot-scope="scope">
-			        <span>{{scope.row.name}}</span>
+			        <span>{{scope.row.address}}</span>
 			      </template>
 			    </el-table-column>
 			    <el-table-column
 			      label="电话">
 			      <template slot-scope="scope">
-			        <span>{{scope.row.name}}</span>
+			        <span>{{scope.row.phone}}</span>
 			      </template>
 			    </el-table-column>
 			    <el-table-column
 			      label="经营时间">
 			      <template slot-scope="scope">
-			        <span>{{scope.row.name}}</span>
+			        <span>{{scope.row.open_time}}</span>
 			      </template>
 			    </el-table-column>
 			    <el-table-column
 			      label="配送时间">
 			      <template slot-scope="scope">
-			        <span>{{scope.row.name}}</span>
+			        <span>{{scope.row.delivery_time}}</span>
 			      </template>
 			    </el-table-column>
 			    <el-table-column
 			      label="综合评分">
 			      <template slot-scope="scope">
-			        <span>{{scope.row.name}}</span>
+			        <span>{{scope.row.scores}}</span>
 			      </template>
 			    </el-table-column>
 			    <el-table-column
 			      label="配送价">
 			      <template slot-scope="scope">
-			        <span>{{scope.row.name}}</span>
+			        <span>{{scope.row.price}}</span>
 			      </template>
 			    </el-table-column>
 			    <el-table-column
 			      label="类别">
 			      <template slot-scope="scope">
-			        <span>{{scope.row.name}}</span>
+			        <span>{{scope.row.family}}</span>
 			      </template>
 			    </el-table-column>
 
@@ -75,14 +75,16 @@
 			      <template slot-scope="scope">
 			      	<el-upload
 							  class="upload-demo"
-							  action="https://jsonplaceholder.typicode.com/posts/"
+							  action="/api/file/upload"
+							  :data="uploadData"
+							  :on-success="handleAvatarSuccess"
 							  :show-file-list="false">
 							  <el-tooltip class="item" effect="dark" content="上传图片" placement="top">
 				      		<el-button type="primary" icon="el-icon-upload" circle size="mini"></el-button>
 				      	</el-tooltip>
 							</el-upload>
 			      	
-			      	<el-tooltip class="item" effect="dark" content="修改" placement="top">
+			      	<!-- <el-tooltip class="item" effect="dark" content="修改" placement="top">
 			      		<el-button 
 			      			type="primary" 
 			      			icon="el-icon-edit" 
@@ -90,9 +92,14 @@
 			      			size="mini"
 			      			@click="handleEdit(scope.$index, scope.row)">
 			      			</el-button>
-			      	</el-tooltip>
+			      	</el-tooltip> -->
 			      	<el-tooltip class="item" effect="dark" content="删除" placement="top">
-			      		<el-button type="danger" icon="el-icon-delete" circle size="mini"></el-button>
+			      		<el-button 
+			      			type="danger" 
+			      			icon="el-icon-delete" 
+			      			circle size="mini"
+			      			@click="handleDelete(scope.$index, scope.row)"
+			      			></el-button>
 			      	</el-tooltip>
 			      	<!-- <el-button
 			          size="mini"
@@ -141,30 +148,42 @@
 			return {
 				tableData: [],
 				loading: true,
-		    dialogFormVisible: false,
-		    editDialogFormVisible:false,
-		    rowData: {}
+			    dialogFormVisible: false,
+			    editDialogFormVisible:false,
+			    rowData: {},
+			    uploadData: {
+			    	directory: '\/user'
+			    }
 			}
 		},
 		methods: {
 			handleEdit(i, data) {
+				this.rowData = Object.assign({}, data);
 				this.editDialogFormVisible = true;
 			},
-			handleDelete(i, data) {
-				deleteMenu(data.id)
-					.then(res => {
-						this.$message({
-		          message: '删除成功',
+			handleAvatarSuccess() {
+				this.$message({
+		          message: '上传成功',
 		          type: 'success'
 		        });
+			},
+			handleDelete(i, data) {
+				deleteMenu(data.rowKey)
+					.then(res => {
+						this.$message({
+				          message: '删除成功',
+				          type: 'success'
+				        });
+				        this.getMenus();
 					})
 					.catch(err => {
 						this.$message.error('删除失败');
 					})
 			},
 			getMenus () {
-				getAllMenus()
+				getAllMenus('shop')
 					.then(data => {
+						this.tableData = data.data;
 						this.loading = false;
 					})
 					.catch(err => {
@@ -172,11 +191,13 @@
 					})
 			},
 			closeCreateMenuDialog (flag) {
-				if(flag === 'add') {}
+				if(flag === 'add') {
+					this.getMenus()
+				}
 				this.dialogFormVisible = false
 			},
 			closeEditMenuDialog (flag) {
-				if(flag === 'modify') {}
+				if(flag === 'modify') {this.getMenus()}
 				this.editDialogFormVisible = false
 			}
 		},

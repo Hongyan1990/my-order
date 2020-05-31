@@ -9,7 +9,16 @@ const config = merge(baseConfig, {
 	    filename: '[name].bundle.js'
 	},
 	devServer: {
+		port: 8000,
+    	host: '0.0.0.0',
 		hot: true,
+		headers: { 'Access-Control-Allow-Origin': '*' },
+	    proxy: {
+	      '/api': {
+	        target: 'http://192.168.18.99:8080',
+	        changeOrigin: true
+	      }
+	    },
 		contentBase: path.join(__dirname, '../dist'),
 		historyApiFallback:  {
 	      index: '/dist/index.html'

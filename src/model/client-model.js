@@ -38,19 +38,19 @@ const handleRequest = (request) => {
 }
 
 module.exports = {
-  getAllMenus (param) {
-    return handleRequest(request.get(`api/points/?${param}`))
+  getAllMenus (table) {
+    return handleRequest(request.get(`api/data/?tableName=${table}`))
   },
-  addMenu (todo) {
-    return handleRequest(request.post('api/points/', todo))
+  addMenu (data) {
+    return handleRequest(request.post('api/data/', {tableName: 'shop', 'object': data}))
   },
-  updateMenu (id, todo) {
-    return handleRequest(request.put(`api/points/${id}/`, todo))
+  updateMenu (data) {
+    return handleRequest(request.post('api/data/', {tableName: 'shop', 'object': data}))
   },
   deleteMenu (id) {
-    return handleRequest(request.delete(`api/todo/${id}`))
+    return handleRequest(request.delete(`api/data/?tableName=shop&rowKey=${id}`))
   },
-  addOrder (ids) {
-    return handleRequest(request.post('/api/delete/completed', {ids}))
+  addOrder (data) {
+    return handleRequest(request.post('api/data/', {tableName: 'order', 'object': data}))
   }
 }
