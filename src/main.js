@@ -3,7 +3,7 @@ import Router from 'vue-router'
 import {
   Button, Container, Header, Main, Row, Col,
   Table, TableColumn, Dialog, Input, Form, FormItem,
-  Tooltip, Upload, Loading, Message
+  Tooltip, Upload, Loading, Message, Tabs, TabPane
 } from 'element-ui'
 
 import App from './app.vue'
@@ -28,6 +28,8 @@ Vue.use(FormItem)
 Vue.use(Tooltip)
 Vue.use(Upload)
 Vue.use(Loading)
+Vue.use(Tabs)
+Vue.use(TabPane)
 Vue.prototype.$message = Message
 
 router.beforeEach((to, from, next) => {
