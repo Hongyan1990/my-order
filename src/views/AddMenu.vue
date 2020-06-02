@@ -29,7 +29,7 @@
 		  </el-form>
 	      <div slot="footer" class="dialog-footer">
 	        <el-button @click="closeAddMenuDialog">取 消</el-button>
-	        <el-button type="primary" @click="addMenu" :disabled="validateErr">确 定</el-button>
+	        <el-button type="primary" @click="addMyMenu" :disabled="validateErr">确 定</el-button>
 	      </div>
 	    </el-dialog>
 	</div>
@@ -77,8 +77,9 @@
 	    	closeAddMenuDialog () {
 	    		this.$emit('closeCreateMenuDialog')
 	    	},
-	    	addMenu () {
-	    		addMenu(this.rowData)
+	    	addMyMenu () {
+	    		const jsonData = Object.assign({}, this.rowData, {id: Math.floor(Math.random () * 900) + 100 + ''}) 
+	    		addMenu(jsonData)
 	    			.then(res => {
 	    				this.$message({
 				          message: '新增菜单成功',

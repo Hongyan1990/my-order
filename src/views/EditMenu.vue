@@ -71,7 +71,8 @@
 	    		this.$emit('closeEditMenuDialog')
 	    	},
 	    	editMenu () {
-	    		updateMenu(this.rowData)
+	    		const jsonData = Object.assign({}, this.rowData, {id: this.rowData.rowKey}) 
+	    		updateMenu(jsonData)
 	    			.then(res => {
 	    				this.$message({
 				          message: '修改菜单成功',
