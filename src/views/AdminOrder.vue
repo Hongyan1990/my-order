@@ -1,7 +1,7 @@
 <template>
 	<div>
-		<el-container>
-		  <el-header>管理页面</el-header>
+		<div style="margin-top: 20px; box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1)">
+		  
 		  <el-main>
 		  	<el-row>
 		  		<el-col :span="4">
@@ -15,7 +15,13 @@
 		  	<el-table
 			    :data="tableData"
 			    v-loading="loading"
+			    max-height="500px"
+              	stripe
 			    style="width: 100%">
+			    <template slot="empty">
+	                <img :src="imgUrl" style="width: 200px; margin-top: 20px;"/>
+	                <p style="margin: 0; line-height: 30px">暂无数据</p>
+	            </template>
 			    <el-table-column
 			      label="店铺ID">
 			      <template slot-scope="scope">
@@ -115,7 +121,7 @@
 			    </el-table-column>
 			  </el-table>
 		  </el-main>
-		</el-container>
+		</div>
 		<add-menu 
 			:isShowDialog="dialogFormVisible"
 			@closeCreateMenuDialog="closeCreateMenuDialog">
@@ -131,6 +137,7 @@
 	import EditMenu from './EditMenu.vue'
 	import cookie from '../util/cookie.js'
 	import {getAllMenus, deleteMenu} from '../model/client-model.js'
+	import imgUrl from '../static/no-data2.png'
 	export default {
 		name: 'adminorder',
 		components: {
@@ -147,13 +154,14 @@
 		data () {
 			return {
 				tableData: [],
-				loading: true,
+				loading: false,
 			    dialogFormVisible: false,
 			    editDialogFormVisible:false,
 			    rowData: {},
 			    uploadData: {
 			    	directory: '\/user'
-			    }
+			    },
+			    imgUrl
 			}
 		},
 		methods: {
