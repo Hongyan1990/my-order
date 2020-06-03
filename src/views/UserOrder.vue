@@ -1,8 +1,39 @@
 <template>
 	<div>
-		<el-container>
-		  <el-header>点餐页面</el-header>
 		  <el-tabs style="padding:0 20px;" v-model="activeName" @tab-click="handleClick">
+		  	<el-tab-pane label="我的推荐" name="first">
+		    	<el-main>
+				  	<el-table
+					    :data="tableData"
+					    v-loading="loading"
+					    style="width: 100%">
+					    <el-table-column
+					      label="菜名">
+					      <template slot-scope="scope">
+					        <span style="margin-left: 10px">{{ scope.row.id }}</span>
+					      </template>
+					    </el-table-column>
+					    <el-table-column
+					      label="菜系">
+					      <template slot-scope="scope">
+					        <span>{{scope.row.shopname}}</span>
+					      </template>
+					    </el-table-column>
+					    <el-table-column
+					      label="口味">
+					      <template slot-scope="scope">
+					        <span>{{scope.row.food_name}}</span>
+					      </template>
+					    </el-table-column>
+					    <el-table-column
+					      label="是否套餐">
+					      <template slot-scope="scope">
+					        <span>{{scope.row.address}}</span>
+					      </template>
+					    </el-table-column>
+					  </el-table>
+				  </el-main>
+		    </el-tab-pane>
 		    <el-tab-pane label="热门菜品推荐" name="first">
 		    	<el-main>
 				  	<el-table
@@ -139,8 +170,6 @@
 				  </el-main>
 		    </el-tab-pane>
 		  </el-tabs>
-		  
-		</el-container>
 	</div>
 </template>
 <script>
@@ -149,7 +178,7 @@
 		name: 'userorder',
 		data () {
 			return {
-				loading: true,
+				loading: false,
 				activeName: 'first',
 				tableData: [
 					
@@ -164,6 +193,8 @@
 			handleClick(tab, event) {
         if(this.activeName === 'first') {
 
+        } else if(this.activeName === 'first') {
+        	
         } else {
         	
         }
