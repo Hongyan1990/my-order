@@ -1,6 +1,6 @@
 <template>
   <div class="login-bg">
-    <h1>OrderSysytem</h1>
+    <h1>RecommendSystem</h1>
     <form class="login" @submit="login">
       <h2>
         <span>Login</span>

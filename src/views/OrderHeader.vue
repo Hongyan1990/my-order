@@ -2,8 +2,8 @@
     <header>
         <!--<h1 :class="$style.myTitle">积分商城</h1>-->
       <div class="my-header">
-        <div class="logo" style="color: #4d3cff"><span class="logo-icon"></span>智能推荐</div>
-        <div class="user-info"><span class="login-out" @click="loginOut">退出</span>{{userName}}</div>
+        <div class="logo" style="color: #4d3cff"><span class="logo-icon"></span>RecommendSystem</div>
+        <div class="user-info"><span class="login-out" @click="loginOut">退出</span></div>
       </div>
     </header>
 </template>
@@ -60,5 +60,6 @@
     font-size: 14px;
     margin-right: 10px;
     cursor: pointer;
+    font-weight: 777;
   }
 </style>
